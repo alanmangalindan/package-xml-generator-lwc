@@ -4,7 +4,7 @@ Generate formatted package.xml content on screen based on components changed by 
 
 Note: This can only be used in a Source-tracked Developer sandbox or Developer Pro sandbox.
 
-To turn on source-tracking in your sandbox refer to below link:
+To turn on source-tracking in your sandbox refer to this link:
 https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_enable_source_tracking_sandboxes.htm
 
 # How to deploy to your Developer or Developer Pro Sandbox?
