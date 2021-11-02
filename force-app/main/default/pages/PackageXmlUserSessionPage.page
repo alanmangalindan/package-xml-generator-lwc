@@ -1,0 +1,4 @@
+<!-- Reference: https://salesforcescool.blogspot.com/2021/06/get-session-id-of-logged-in-user-in.html -->
+<apex:page controller="PackageXmlUserSessionHandler">
+  StartSessionId{!$Api.Session_ID}EndSessionId
+ </apex:page>

@@ -1,0 +1,31 @@
+<template>
+    
+    <lightning-card title="">
+
+        <div class="slds-p-around_xxx-small lgc-bg">
+            <lightning-input 
+            name="usernameInput"
+            type="text" 
+            label="Username:"
+            value={username}
+            placeholder="Enter a username, leave blank to default to your own username"></lightning-input>
+        </div>
+
+        <div class="slds-p-around_xxx-small lgc-bg">
+            <lightning-input 
+            name="numberOfDaysInput"
+            label="Days in scope:"
+            value={numberOfDays}></lightning-input>
+        </div>
+
+        <div class="slds-p-around_xxx-small lgc-bg">
+            <lightning-button label="Generate package.xml" title="Generate package.xml" onclick={generatePackage} class="slds-m-left_x-small"></lightning-button>
+        </div>        
+        
+        <div class="row slds-p-around_xxx-small">
+            <lightning-textarea name="textoutput" readonly value={packageXml} label="Package.xml output:" ></lightning-textarea>
+        </div>
+
+    </lightning-card>
+
+</template>
