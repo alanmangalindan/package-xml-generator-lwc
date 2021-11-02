@@ -1,12 +1,16 @@
 # package-xml-generator-lwc
 
 Generate formatted package.xml content on screen based on components changed by a user
+
 Note: This can only be used in a Source-tracked Developer sandbox or Developer Pro sandbox.
+
 To turn on source-tracking in your sandbox refer to below link:
 https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_enable_source_tracking_sandboxes.htm
 
 # How to deploy to your Developer or Developer Pro Sandbox?
-Use the sfdx cli:
+
+Clone this repository locally and use the sfdx cli command below:
+
 sfdx force:source:deploy -x "manifest/package.xml" -u <Sandbox_org_alias>
 
 Note: This modifies the System Admin profile by default so that profile would get access to the deployed components. You can modify any other profile after deployment to the org.
