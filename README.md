@@ -19,4 +19,5 @@ Note: This modifies the System Admin profile by default so that profile would ge
 
 Note: By default the username defaults to the logged in user and the Days in Scope is 1. You can update these fields prior to clicking the button.
 
-![image](https://user-images.githubusercontent.com/46139665/139955442-6b7891b0-40f7-454f-8d3b-07e848224ed6.png)
+![image](https://user-images.githubusercontent.com/46139665/139956222-a2928cfa-5fc0-4fcc-ab4d-fc9b7c29355f.png)
+
