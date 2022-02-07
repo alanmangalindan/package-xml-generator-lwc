@@ -23,6 +23,9 @@ export default class PackageXmlGenerator extends LightningElement {
             if (inp.name == "numberOfDaysInput") {
                 this.numberOfDays = inp.value;
             }
+            if (inp.name == "apiVersion") {
+                this.apiVersion = inp.value;
+            }
         })
 
         // console.log('username: ' + this.username);

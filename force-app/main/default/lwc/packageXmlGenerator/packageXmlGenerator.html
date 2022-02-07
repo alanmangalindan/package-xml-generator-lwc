@@ -19,6 +19,13 @@
         </div>
 
         <div class="slds-p-around_xxx-small lgc-bg">
+            <lightning-input 
+            name="apiVersion"
+            label="API version:"
+            value={apiVersion}></lightning-input>
+        </div>
+
+        <div class="slds-p-around_xxx-small lgc-bg">
             <lightning-button label="Generate package.xml" title="Generate package.xml" onclick={generatePackage} class="slds-m-left_x-small"></lightning-button>
         </div>        
         
