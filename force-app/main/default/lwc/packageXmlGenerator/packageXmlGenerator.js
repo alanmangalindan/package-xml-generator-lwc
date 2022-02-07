@@ -8,6 +8,7 @@ export default class PackageXmlGenerator extends LightningElement {
     username = '';
     numberOfDays = '1';
     packageXml = '';
+    apiVersion = '53.0';
 
     generatePackage(event) {
         console.log(event.target.label);
@@ -45,8 +46,8 @@ export default class PackageXmlGenerator extends LightningElement {
             }
         })
         .catch((error) => {
-            this.packageXml = 'Please ensure this is a source-tracked sandbox. Error occurred in LWC Controller Class: ' + JSON.stringify(error);
-            console.log('Please ensure this is a source-tracked sandbox. Error occurred in LWC Controller Class: ' + JSON.stringify(error));
+            this.packageXml = 'Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error);
+            console.log('Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error));
         });
         
     }
@@ -73,7 +74,7 @@ export default class PackageXmlGenerator extends LightningElement {
                 tempXml += '\t</types>\n';
             }
         }
-        tempXml += '\t<version>52.0</version>\n' +
+        tempXml += '\t<version>' + this.apiVersion + '</version>\n' +
                     '</Package>';
 
         this.packageXml = tempXml;
