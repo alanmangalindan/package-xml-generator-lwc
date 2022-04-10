@@ -21,10 +21,10 @@ public class PackageXmlGeneratorControllerTest {
         
         Test.startTest();
         System.runAs(adminUser){
-            packageXmlResult1 = PackageXmlGeneratorController.getChangedMetadata('','');
-            packageXmlResult2 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'1');
-            packageXmlResult3 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'-1');
-            packageXmlResult4 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'not_a_number');
+            packageXmlResult1 = PackageXmlGeneratorController.getChangedMetadata('','', '54.0');
+            packageXmlResult2 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'1', '54.0');
+            packageXmlResult3 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'-1', '54.0');
+            packageXmlResult4 = PackageXmlGeneratorController.getChangedMetadata(adminUser.Username,'not_a_number', '54.0');
         }
         Test.stopTest();
 

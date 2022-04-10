@@ -8,7 +8,7 @@ export default class PackageXmlGenerator extends LightningElement {
     username = '';
     numberOfDays = '1';
     packageXml = '';
-    apiVersion = '53.0';
+    apiVersion = '54.0';
 
     generatePackage(event) {
         console.log(event.target.label);
@@ -33,7 +33,8 @@ export default class PackageXmlGenerator extends LightningElement {
         // console.log('packageXml: ' + this.packageXml);
 
         getChangedMetadata ({ username: this.username, 
-                            numberOfDays: this.numberOfDays})
+                            numberOfDays: this.numberOfDays, 
+                            apiVersion: this.apiVersion })
         .then((result) => {
             if (result) {
 

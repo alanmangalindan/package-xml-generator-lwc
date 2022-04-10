@@ -11,7 +11,7 @@ public without sharing class PackageXmlUserSessionHandler {
             vfContent = sessionIdPage.getContent().toString();
         }
         else {
-            vfContent = 'Start_SomeSessionIdValue_End';
+            vfContent = 'StartSessionId_SomeSessionIdValue_EndSessionId';
         }
         // Find the position of Start and End
         Integer startPosition = vfContent.indexOf('StartSessionId') + 'StartSessionId'.length();

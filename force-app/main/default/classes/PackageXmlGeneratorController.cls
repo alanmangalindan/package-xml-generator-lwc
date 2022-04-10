@@ -3,7 +3,7 @@
 public without sharing class PackageXmlGeneratorController {
     
     @AuraEnabled
-    public static Map<String, List<String>> getChangedMetadata(String username, String numberOfDays){
+    public static Map<String, List<String>> getChangedMetadata(String username, String numberOfDays, String apiVersion){
 
         Integer numDays = 1;
 
@@ -39,7 +39,7 @@ public without sharing class PackageXmlGeneratorController {
             String auth = 'Bearer '+ PackageXmlUserSessionHandler.fetchUserSessionId();
             req.setHeader('Authorization', auth);
             req.setHeader('Content-Type', 'application/json');
-            req.setEndpoint(Url.getOrgDomainUrl().toExternalForm() + '/services/data/v52.0/tooling/query/?q=' + 
+            req.setEndpoint(Url.getOrgDomainUrl().toExternalForm() + '/services/data/v' + apiVersion + '/tooling/query/?q=' + 
                                     'SELECT+Id,+LastModifiedBy.Username,+LastModifiedDate,+MemberIdOrName,+MemberName,+MemberType+' + 
                                     'from+SourceMember+WHERE+LastModifiedDate=LAST_N_DAYS:' + numDays + '+AND+LastModifiedBy.Username=\'' + username +
                                     '\'+Order+By+LastModifiedDate+DESC');
@@ -88,6 +88,7 @@ public without sharing class PackageXmlGeneratorController {
             return packageXmlMapSorted;
             
         } catch (Exception e) {
+            System.debug('e.getStackTraceString(): ' + e.getStackTraceString());
             throw new AuraHandledException(e.getMessage());
         }
     }
