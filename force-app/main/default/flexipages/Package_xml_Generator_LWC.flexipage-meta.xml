@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>packageXmlGenerator</componentName>
+                <identifier>packageXmlGenerator</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
