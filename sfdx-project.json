@@ -7,6 +7,5 @@
   ],
   "name": "package-xml-generator-lwc",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "54.0"
+  "sfdcLoginUrl": "https://login.salesforce.com"
 }
