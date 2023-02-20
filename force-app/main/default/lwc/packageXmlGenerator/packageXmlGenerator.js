@@ -8,7 +8,7 @@ export default class PackageXmlGenerator extends LightningElement {
     username = '';
     numberOfDays = '1';
     packageXml = '';
-    apiVersion = '56.0';
+    apiVersion = '57.0';
 
     generatePackage(event) {
         console.log(event.target.label);
