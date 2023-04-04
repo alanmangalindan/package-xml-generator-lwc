@@ -1,7 +1,8 @@
 // Alan Mangalindan (alan.mangalindan@davanti.co.nz)]
 // packageXmLGenerator LWC
 import { LightningElement } from 'lwc';
-import getChangedMetadata from '@salesforce/apex/PackageXmlGeneratorController.getChangedMetadata';
+// import getChangedMetadata from '@salesforce/apex/PackageXmlGeneratorController.getChangedMetadata';
+import startContinuation from '@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation';
 
 export default class PackageXmlGenerator extends LightningElement {
 
@@ -32,7 +33,8 @@ export default class PackageXmlGenerator extends LightningElement {
         // console.log('numberOfDays: ' + this.numberOfDays);
         // console.log('packageXml: ' + this.packageXml);
 
-        getChangedMetadata ({ username: this.username, 
+        // getChangedMetadata ({ username: this.username,
+        startContinuation ({ username: this.username, 
                             numberOfDays: this.numberOfDays, 
                             apiVersion: this.apiVersion })
         .then((result) => {
