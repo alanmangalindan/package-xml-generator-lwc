@@ -10,8 +10,10 @@ export default class PackageXmlGenerator extends LightningElement {
     numberOfDays = '1';
     packageXml = '';
     apiVersion = '57.0';
+    isLoaded = true;
 
-    generatePackage(event) {
+    async generatePackage(event) {
+        this.isLoaded = false;
         console.log(event.target.label);
         this.packageXml = ''; // clear the text box
 
@@ -33,29 +35,50 @@ export default class PackageXmlGenerator extends LightningElement {
         // console.log('numberOfDays: ' + this.numberOfDays);
         // console.log('packageXml: ' + this.packageXml);
 
-        // getChangedMetadata ({ username: this.username,
-        startContinuation ({ username: this.username, 
-                            numberOfDays: this.numberOfDays, 
-                            apiVersion: this.apiVersion })
-        .then((result) => {
+        try {
+            const result = await startContinuation({ username: this.username, 
+                                                    numberOfDays: this.numberOfDays, 
+                                                    apiVersion: this.apiVersion });
+            
             if (result) {
-
                 console.log('result.length: ' + result.length);
                 console.log('result: ' + JSON.stringify(result));
                 this.formatPackageXml(result);
-
             }
             else {
                 // No results
                console.log('No results returned.');
                this.packageXml = 'No results retrieved from SourceMember object.';
             }
-        })
-        .catch((error) => {
+        } catch(error) {
             this.packageXml = 'Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error);
             console.log('Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error));
-        });
-        
+        } finally {
+            this.isLoaded = true;
+        }
+
+        // getChangedMetadata ({ username: this.username,
+        // startContinuation ({ username: this.username, 
+        //                     numberOfDays: this.numberOfDays, 
+        //                     apiVersion: this.apiVersion })
+        // .then((result) => {
+        //     if (result) {
+
+        //         console.log('result.length: ' + result.length);
+        //         console.log('result: ' + JSON.stringify(result));
+        //         this.formatPackageXml(result);
+
+        //     }
+        //     else {
+        //         // No results
+        //        console.log('No results returned.');
+        //        this.packageXml = 'No results retrieved from SourceMember object.';
+        //     }
+        // })
+        // .catch((error) => {
+        //     this.packageXml = 'Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error);
+        //     console.log('Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error));
+        // });        
     }
 
     formatPackageXml(apexResult) {

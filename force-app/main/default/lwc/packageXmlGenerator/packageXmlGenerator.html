@@ -30,7 +30,12 @@
         </div>        
         
         <div class="row slds-p-around_xxx-small">
+            
             <lightning-textarea name="textoutput" readonly value={packageXml} label="Package.xml output:" ></lightning-textarea>
+
+            <template if:false={isLoaded}>
+                <lightning-spinner alternative-text="Loading..." variant="brand"></lightning-spinner>
+            </template>
         </div>
 
     </lightning-card>
