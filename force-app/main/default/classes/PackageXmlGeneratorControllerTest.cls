@@ -26,9 +26,9 @@ public class PackageXmlGeneratorControllerTest {
         	Continuation conti4 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Username, 'not_a_number', '57.0');
 
         	// Store continuation requests
-        	requests1 = conti1.getRequests();        
-        	requests2 = conti2.getRequests();        
-        	requests3 = conti3.getRequests();        
+        	requests1 = conti1.getRequests(); 
+        	requests2 = conti2.getRequests();      
+        	requests3 = conti3.getRequests(); 
         	requests4 = conti4.getRequests();
 
             // Store the mock response
