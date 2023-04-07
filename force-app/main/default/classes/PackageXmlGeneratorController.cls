@@ -33,7 +33,7 @@ public without sharing class PackageXmlGeneratorController {
     
         Continuation con = new Continuation(120);
         con.continuationMethod='querySourceMember';
-        con.state='Query SourceMember';
+        con.state='Query SourceMember Object via REST Tooling API';
 
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -54,46 +54,57 @@ public without sharing class PackageXmlGeneratorController {
     @AuraEnabled(cacheable=true) 
     public static Map<String, List<String>> querySourceMember(List<String> labels, Object state) {
 
+        System.debug(LoggingLevel.INFO, 'labels: ' + labels);
+        System.debug(LoggingLevel.INFO, 'state: ' + state);
+
         HttpResponse response = Continuation.getResponse(labels[0]);
-        if (Test.isRunningTest()) { // to debug any test class failures
-            System.debug(LoggingLevel.INFO, 'response.getBody(): ' + response.getBody());
-        }
 
-        Map<String, Object> calloutResult = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-
-        System.debug(LoggingLevel.INFO, 'calloutResult.get(\'records\'): ' + calloutResult.get('records'));
-
-        String changedMetadata = JSON.serialize(calloutResult.get('records'));
-
-        List<SourceMemberWrapper> sourceMembers = (List<SourceMemberWrapper>) JSON.deserialize(changedMetadata, List<SourceMemberWrapper>.class);
-
-        System.debug(LoggingLevel.INFO, 'sourceMembers.size(): ' + sourceMembers.size());
-
-        Map<String, List<String>> packageXmlMap = new Map<String, List<String>>();
-        Map<String, List<String>> packageXmlMapSorted = new Map<String, List<String>>();
-
-        for(SourceMemberWrapper smw: sourceMembers) {
-            List<String> tempMemberNames = packageXmlMap.get(smw.memberType);
-            if (tempMemberNames != null && tempMemberNames.size() > 0) {
-                tempMemberNames.add(smw.memberName);
-                packageXmlMap.put(smw.memberType, tempMemberNames);
+        if (response.getStatusCode() == 200) {
+            if (Test.isRunningTest()) { // to debug any test class failures
+                System.debug(LoggingLevel.INFO, 'response.getBody(): ' + response.getBody());
             }
-            else {
-                List<String> tempList = new List<String>();
-                tempList.add(smw.memberName);
-                packageXmlMap.put(smw.memberType, tempList);
+    
+            Map<String, Object> calloutResult = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+    
+            System.debug(LoggingLevel.INFO, 'calloutResult.get(\'records\'): ' + calloutResult.get('records'));
+    
+            String changedMetadata = JSON.serialize(calloutResult.get('records'));
+    
+            List<SourceMemberWrapper> sourceMembers = (List<SourceMemberWrapper>) JSON.deserialize(changedMetadata, List<SourceMemberWrapper>.class);
+    
+            System.debug(LoggingLevel.INFO, 'sourceMembers.size(): ' + sourceMembers.size());
+    
+            Map<String, List<String>> packageXmlMap = new Map<String, List<String>>();
+            Map<String, List<String>> packageXmlMapSorted = new Map<String, List<String>>();
+    
+            for(SourceMemberWrapper smw: sourceMembers) {
+                List<String> tempMemberNames = packageXmlMap.get(smw.memberType);
+                if (tempMemberNames != null && tempMemberNames.size() > 0) {
+                    tempMemberNames.add(smw.memberName);
+                    packageXmlMap.put(smw.memberType, tempMemberNames);
+                }
+                else {
+                    List<String> tempList = new List<String>();
+                    tempList.add(smw.memberName);
+                    packageXmlMap.put(smw.memberType, tempList);
+                }
             }
+    
+            Set<String> keysToSort = packageXmlMap.keySet();
+            List<String> sortedKeys = new List<String>(keysToSort);
+            sortedKeys.sort();
+    
+            for (String key : sortedKeys) {
+                packageXmlMapSorted.put(key, packageXmlMap.get(key));
+            }
+    
+            return packageXmlMapSorted;
+        } 
+        else {
+            System.debug('response.getStatusCode(): ' + response.getStatusCode());
+            throw new AuraHandledException('Continuation Error --- ' + response.getStatusCode() + ' : ' + response.getStatus());
         }
-
-        Set<String> keysToSort = packageXmlMap.keySet();
-        List<String> sortedKeys = new List<String>(keysToSort);
-        sortedKeys.sort();
-
-        for (String key : sortedKeys) {
-            packageXmlMapSorted.put(key, packageXmlMap.get(key));
-        }
-
-        return packageXmlMapSorted;
+        
     }
 
     // @AuraEnabled
