@@ -101,7 +101,8 @@ public without sharing class PackageXmlGeneratorController {
             return packageXmlMapSorted;
         } 
         else {
-            System.debug('response.getStatusCode(): ' + response.getStatusCode());
+            System.debug(LoggingLevel.INFO, 'response.getStatusCode(): ' + response.getStatusCode());
+            System.debug(LoggingLevel.INFO, 'response.getStatus():' + response.getStatus());
             throw new AuraHandledException('Continuation Error --- ' + response.getStatusCode() + ' : ' + response.getStatus());
         }
         

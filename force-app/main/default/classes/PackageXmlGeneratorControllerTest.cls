@@ -16,7 +16,8 @@ public class PackageXmlGeneratorControllerTest {
         Map<String, HttpRequest> requests4;
 
         Map<String, List<String>> packageXmlResult1;
-        
+
+        String errorMessage;        
         
         Test.startTest();        
         System.runAs(adminUser){
@@ -35,26 +36,37 @@ public class PackageXmlGeneratorControllerTest {
         	HttpResponse response = new SourceMemberMock().respond(requests1.values()[0]);
             // Set the mock response
             Test.setContinuationResponse(new List<String>(requests1.keySet())[0], response);
-            packageXmlResult1 = PackageXmlGeneratorController.querySourceMember(new List<String>(requests1.keySet()), response);
+            packageXmlResult1 = PackageXmlGeneratorController.querySourceMember(new List<String>(requests1.keySet()), 'Query SourceMember Object via REST Tooling API');
         	System.debug(LoggingLevel.INFO, 'packageXmlResult1: ' + packageXmlResult1);
+
+            Test.setContinuationResponse(new List<String>(requests1.keySet())[0], new SourceMemberMock().responseFailure(requests1.values()[0]));
+            try {
+                PackageXmlGeneratorController.querySourceMember(new List<String>(requests1.keySet()), 'Query SourceMember Object via REST Tooling API');
+            }
+            catch (Exception excep) {
+                System.debug(LoggingLevel.INFO, 'excep: ' + excep);
+                System.debug(LoggingLevel.INFO, 'excep.getMessage(): ' + excep.getMessage());
+                errorMessage = excep.getMessage();
+            }
         }
         Test.stopTest();
         
         System.debug(LoggingLevel.INFO, 'requests1: ' + requests1);
         System.debug(LoggingLevel.INFO, 'requests1.keySet(): ' + requests1.keySet());
-        System.Assert(requests1.size() == 1);
+        System.assert(requests1.size() == 1);
         System.debug(LoggingLevel.INFO, 'requests2: ' + requests2);
         System.debug(LoggingLevel.INFO, 'requests2.keySet(): ' + requests2.keySet());
-        System.Assert(requests2.size() == 1);
+        System.assert(requests2.size() == 1);
         System.debug(LoggingLevel.INFO, 'requests3: ' + requests3);
         System.debug(LoggingLevel.INFO, 'requests3.keySet(): ' + requests3.keySet());
-        System.Assert(requests3.size() == 1);
+        System.assert(requests3.size() == 1);
         System.debug(LoggingLevel.INFO, 'requests4: ' + requests4);
         System.debug(LoggingLevel.INFO, 'requests4.keySet(): ' + requests4.keySet());
-        System.Assert(requests4.size() == 1);
+        System.assert(requests4.size() == 1);
 
         System.assert(packageXmlResult1.keySet().contains('ApexClass'), 'MemberType returned is not ApexClass');
         System.assert(packageXmlResult1.values()[0].size() == 2, '2 MemberName values were not returned in the HTTP mock callout.');
-        
+
+        System.assert(errorMessage.contains('Script-thrown exception'), 'Continuation Error scenario not achieved.');        
     }
 }

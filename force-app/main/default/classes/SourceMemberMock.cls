@@ -47,4 +47,14 @@ public class SourceMemberMock implements HttpCalloutMock{
         response.setStatusCode(200);
         return response; 
     }
+
+    public HttpResponse responseFailure(HttpRequest request) {
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        response.setBody('Simulated Callout failure');
+        response.setStatusCode(2000);
+
+        return response;
+    }
 }
