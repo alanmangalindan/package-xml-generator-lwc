@@ -10,10 +10,10 @@ export default class PackageXmlGenerator extends LightningElement {
     numberOfDays = '1';
     packageXml = '';
     apiVersion = '57.0';
-    isLoaded = true;
+    showSpinner = false;
 
     async generatePackage(event) {
-        this.isLoaded = false;
+        this.showSpinner = true;
         console.log(event.target.label);
         this.packageXml = ''; // clear the text box
 
@@ -54,7 +54,7 @@ export default class PackageXmlGenerator extends LightningElement {
             this.packageXml = 'Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error);
             console.log('Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: ' + JSON.stringify(error));
         } finally {
-            this.isLoaded = true;
+            this.showSpinner = false;
         }
 
         // getChangedMetadata ({ username: this.username,

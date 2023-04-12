@@ -33,7 +33,7 @@
             
             <lightning-textarea name="textoutput" readonly value={packageXml} label="Package.xml output:" ></lightning-textarea>
 
-            <template if:false={isLoaded}>
+            <template lwc:if={showSpinner}>
                 <lightning-spinner alternative-text="Loading..." variant="brand"></lightning-spinner>
             </template>
         </div>
