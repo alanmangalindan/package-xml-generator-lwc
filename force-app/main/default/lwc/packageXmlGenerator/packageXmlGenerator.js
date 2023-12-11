@@ -1,4 +1,4 @@
-// Alan Mangalindan (alan.mangalindan@davanti.co.nz)]
+// Alan Mangalindan (alan.mangalindan@merkle.com)]
 // packageXmLGenerator LWC
 import { LightningElement } from 'lwc';
 // import getChangedMetadata from '@salesforce/apex/PackageXmlGeneratorController.getChangedMetadata';
@@ -9,7 +9,7 @@ export default class PackageXmlGenerator extends LightningElement {
     username = '';
     numberOfDays = '1';
     packageXml = '';
-    apiVersion = '57.0';
+    apiVersion = '59.0';
     showSpinner = false;
 
     async generatePackage(event) {
