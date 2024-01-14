@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>PackageXmlGeneratorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PackageXmlGeneratorControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PackageXmlUserSessionHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SourceMemberMock</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Permissions to use the Package XML Generator LWC</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Package XML Generator</label>
+    <license>Salesforce</license>
+    <pageAccesses>
+        <apexPage>PackageXmlUserSessionPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <tabSettings>
+        <tab>Package_xml_Generator_LWC</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

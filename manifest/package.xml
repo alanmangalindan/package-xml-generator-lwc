@@ -24,8 +24,8 @@
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Admin</members>
-        <name>Profile</name>
+        <members>Package_XML_Generator</members>
+        <name>PermissionSet</name>
     </types>
     <version>57.0</version>
 </Package>
