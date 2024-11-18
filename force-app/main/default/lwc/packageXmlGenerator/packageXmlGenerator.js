@@ -9,7 +9,7 @@ export default class PackageXmlGenerator extends LightningElement {
     username = '';
     numberOfDays = '1';
     packageXml = '';
-    apiVersion = '60.0';
+    apiVersion = '62.0';
     showSpinner = false;
 
     async generatePackage(event) {
