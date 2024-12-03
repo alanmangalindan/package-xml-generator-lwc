@@ -1,6 +1,7 @@
 // Alan Mangalindan (alan.mangalindan@merkle.com)]
 // packageXmLGenerator LWC
 import { LightningElement } from "lwc";
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation";
 
 export default class PackageXmlGenerator extends LightningElement {
@@ -94,6 +95,12 @@ export default class PackageXmlGenerator extends LightningElement {
         console.log("window.isSecureContext: " + window.isSecureContext);
         if (navigator.clipboard && window.isSecureContext) {
             console.log("Copied to Clipboard!");
+            const toastEvent = new ShowToastEvent({
+                title: "Successfully copied package.xml to clipboard!",
+                message: "",
+                variant: "success"
+            });
+            this.dispatchEvent(toastEvent);
             return navigator.clipboard.writeText(this.packageXml);
         }
     }
