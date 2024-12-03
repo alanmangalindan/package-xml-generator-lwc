@@ -1,7 +1,7 @@
 // Alan Mangalindan (alan.mangalindan@merkle.com)]
 // packageXmLGenerator LWC
 import { LightningElement } from "lwc";
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation";
 
 export default class PackageXmlGenerator extends LightningElement {
@@ -86,22 +86,25 @@ export default class PackageXmlGenerator extends LightningElement {
     }
 
     copyToClipboard() {
-        console.log("In copyToClipboard method...");
-        // let copyText = this.template.querySelector(".packageXmlTextArea");
-        // copyText.focus();
-        // copyText.select();
-        // document.execCommand("copy");
-        console.log("navigator.clipboard: " + navigator.clipboard);
-        console.log("window.isSecureContext: " + window.isSecureContext);
-        if (navigator.clipboard && window.isSecureContext) {
-            console.log("Copied to Clipboard!");
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                const toastEvent = new ShowToastEvent({
+                    title: "Successfully copied package.xml to clipboard!",
+                    message: "",
+                    variant: "success"
+                });
+                this.dispatchEvent(toastEvent);
+                return navigator.clipboard.writeText(this.packageXml);
+            }
+        } catch (error) {
             const toastEvent = new ShowToastEvent({
-                title: "Successfully copied package.xml to clipboard!",
+                title: "Copy to clipboard failed.",
                 message: "",
-                variant: "success"
+                variant: "error"
             });
             this.dispatchEvent(toastEvent);
-            return navigator.clipboard.writeText(this.packageXml);
+            console.log("Error copying to clipboard: ", error);
         }
+        return navigator.clipboard.writeText("");
     }
 }
