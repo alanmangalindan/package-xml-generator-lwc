@@ -1,43 +1,52 @@
 <template>
-    
     <lightning-card title="">
-
         <div class="slds-p-around_xxx-small lgc-bg">
-            <lightning-input 
-            name="usernameInput"
-            type="text" 
-            label="Username:"
-            value={username}
-            placeholder="Enter a username, leave blank to default to your own username"></lightning-input>
+            <lightning-input
+                name="usernameInput"
+                type="text"
+                label="Username:"
+                value={username}
+                placeholder="Enter a username, leave blank to default to your own username"
+            ></lightning-input>
         </div>
 
         <div class="slds-p-around_xxx-small lgc-bg">
-            <lightning-input 
-            name="numberOfDaysInput"
-            label="Days in scope:"
-            value={numberOfDays}></lightning-input>
+            <lightning-input name="numberOfDaysInput" label="Days in scope:" value={numberOfDays}></lightning-input>
         </div>
 
         <div class="slds-p-around_xxx-small lgc-bg">
-            <lightning-input 
-            name="apiVersion"
-            label="API version:"
-            value={apiVersion}></lightning-input>
+            <lightning-input name="apiVersion" label="API version:" value={apiVersion}></lightning-input>
         </div>
 
         <div class="slds-p-around_xxx-small lgc-bg">
-            <lightning-button label="Generate package.xml" title="Generate package.xml" onclick={generatePackage} class="slds-m-left_x-small"></lightning-button>
-        </div>        
-        
+            <lightning-button
+                label="Generate package.xml"
+                title="Generate package.xml"
+                onclick={generatePackage}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+        </div>
+
+        <div class="slds-p-around_xxx-small lgc-bg">
+            <lightning-button
+                label="Copy package.xml to clipboard"
+                title="Copy package.xml to clipboard"
+                onclick={copyToClipboard}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+        </div>
+
         <div class="row slds-p-around_xxx-small">
-            
-            <lightning-textarea name="textoutput" readonly value={packageXml} label="Package.xml output:" ></lightning-textarea>
+            <lightning-textarea
+                name="textoutput"
+                readonly
+                value={packageXml}
+                label="Package.xml output:"
+            ></lightning-textarea>
 
             <template lwc:if={showSpinner}>
                 <lightning-spinner alternative-text="Loading..." variant="brand"></lightning-spinner>
             </template>
         </div>
-
     </lightning-card>
-
 </template>

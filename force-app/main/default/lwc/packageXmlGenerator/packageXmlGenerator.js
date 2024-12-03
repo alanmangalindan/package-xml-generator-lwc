@@ -112,4 +112,23 @@ export default class PackageXmlGenerator extends LightningElement {
         
     }
 
+    copyToClipboard() {
+        console.log('In copyToClipboard method...');
+        // let copyText = this.template.querySelector(".packageXmlTextArea");
+        // copyText.focus();
+        // copyText.select();
+        // document.execCommand("copy");
+        console.log('navigator.clipboard: ' + navigator.clipboard);
+        console.log('window.isSecureContext: ' + window.isSecureContext);
+        if (
+            navigator.clipboard && 
+            window.isSecureContext
+        ) {
+            console.log('Copied to Clipboard!');
+            return navigator.clipboard.writeText(
+                this.packageXml
+            );
+        }
+
+    }
 }
