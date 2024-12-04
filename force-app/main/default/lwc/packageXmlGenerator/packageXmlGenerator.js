@@ -38,12 +38,9 @@ export default class PackageXmlGenerator extends LightningElement {
             });
 
             if (result) {
-                console.log("result.length: " + result.length);
-                console.log("result: " + JSON.stringify(result));
                 this.formatPackageXml(result);
             } else {
                 // No results
-                console.log("No results returned.");
                 this.packageXml = "No results retrieved from SourceMember object.";
             }
         } catch (error) {
@@ -60,8 +57,6 @@ export default class PackageXmlGenerator extends LightningElement {
     }
 
     formatPackageXml(apexResult) {
-        console.log("In formatPackageXml method...");
-
         let tempXml = "";
         tempXml +=
             '<?xml version="1.0" encoding="UTF-8"?>\n' + '<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n';
@@ -72,7 +67,6 @@ export default class PackageXmlGenerator extends LightningElement {
                 tempXml += "\t<types>\n";
 
                 for (let i = 0; i < apexResult[key].length; i++) {
-                    console.log("MemberName is: " + apexResult[key][i]);
                     tempXml += "\t\t<members>" + apexResult[key][i] + "</members>\n";
                 }
 
@@ -98,13 +92,21 @@ export default class PackageXmlGenerator extends LightningElement {
             }
         } catch (error) {
             const toastEvent = new ShowToastEvent({
-                title: "Copy to clipboard failed.",
+                title: "Copy to clipboard failed. Please see browser console for error.",
                 message: "",
                 variant: "error"
             });
             this.dispatchEvent(toastEvent);
             console.log("Error copying to clipboard: ", error);
+            return navigator.clipboard.writeText("");
         }
+        console.log("Error copying to clipboard. Please enable Lightning Web Security in Setup > Session Settings.");
+        const toastEvent = new ShowToastEvent({
+            title: "Copy to clipboard failed.",
+            message: "Please enable Lightning Web Security in Setup > Session Settings.",
+            variant: "error"
+        });
+        this.dispatchEvent(toastEvent);
         return navigator.clipboard.writeText("");
     }
 }
