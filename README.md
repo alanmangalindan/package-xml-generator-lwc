@@ -11,7 +11,7 @@ https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_se
 
 Clone this repository locally and use the sfdx cli command below:
 
-sfdx force:source:deploy -x "manifest/package.xml" -u <Sandbox_org_alias>
+sf project deploy start -x "manifest/package.xml" -o <Sandbox_org_alias> --ignore-changes
 
 Note: This modifies the System Admin profile by default so that profile would get access to the deployed components. You can modify any other profile after deployment to the org.
 
