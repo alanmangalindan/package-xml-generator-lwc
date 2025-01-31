@@ -3,7 +3,7 @@
 import { LightningElement } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation";
-import Id from '@salesforce/user/Id';
+import Id from "@salesforce/user/Id";
 
 export default class PackageXmlGenerator extends LightningElement {
     username = "";
@@ -67,13 +67,17 @@ export default class PackageXmlGenerator extends LightningElement {
                 this.packageXml = "No results retrieved from SourceMember object.";
             }
         } catch (error) {
-            this.packageXml =
-                "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
-                JSON.stringify(error);
-            console.log(
-                "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
-                    JSON.stringify(error)
-            );
+            if (this.userId === null) {
+                this.packageXml = "Please select a User.";
+            } else {
+                this.packageXml =
+                    "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
+                    JSON.stringify(error);
+                console.log(
+                    "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
+                        JSON.stringify(error)
+                );
+            }
         } finally {
             this.showSpinner = false;
         }
