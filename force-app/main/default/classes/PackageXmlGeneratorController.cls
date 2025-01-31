@@ -3,14 +3,11 @@
 public without sharing class PackageXmlGeneratorController {
     
     @AuraEnabled(continuation=true cacheable=true)
-    public static Object startContinuation(String username, String numberOfDays, String apiVersion) {
+    public static Object startContinuation(String userId, String numberOfDays, String apiVersion) {
 
         Integer numDays = 1;
 
-        if (String.isEmpty(username)) {
-            username = UserInfo.getUserName();
-        }
-
+        String username = [SELECT Username from User WHERE Id = :userId][0].Username;
         if (String.isNotBlank(numberOfDays)) {
             try {
                 Integer num = Integer.valueof(numberOfDays.trim());

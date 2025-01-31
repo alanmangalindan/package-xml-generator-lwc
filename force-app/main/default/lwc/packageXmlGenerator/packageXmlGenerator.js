@@ -55,7 +55,7 @@ export default class PackageXmlGenerator extends LightningElement {
 
         try {
             const result = await startContinuation({
-                username: this.username,
+                userId: this.userId,
                 numberOfDays: this.numberOfDays,
                 apiVersion: this.apiVersion
             });
