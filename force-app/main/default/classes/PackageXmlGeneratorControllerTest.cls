@@ -9,6 +9,8 @@ public class PackageXmlGeneratorControllerTest {
         User adminUser = new User(FirstName = 'Test', LastName = 'AdminUser', Alias='TestAdmn', Email='some_email@testemailuser.co.nz', 
                                  Username = 'test.adminuser@my.unique.user.co.nz.sandbox', ProfileId = adminProfile[0].Id,
                                  LanguageLocaleKey = 'en_US', EmailEncodingKey='UTF-8', LocaleSidKey = 'en_NZ', TimeZoneSidKey = 'Pacific/Auckland');
+        insert adminUser;
+        System.debug('adminUser.Id:: ' + adminUser.Id);
 
         Map<String, HttpRequest> requests1;        
         Map<String, HttpRequest> requests2;        
@@ -21,10 +23,10 @@ public class PackageXmlGeneratorControllerTest {
         
         Test.startTest();        
         System.runAs(adminUser){
-        	Continuation conti1 = (Continuation) PackageXmlGeneratorController.startContinuation('','', '57.0');
-        	Continuation conti2 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Username,'1', '57.0');
-        	Continuation conti3 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Username,'-1', '57.0');
-        	Continuation conti4 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Username, 'not_a_number', '57.0');
+        	Continuation conti1 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'', '62.0');
+        	Continuation conti2 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'1', '62.0');
+        	Continuation conti3 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'-1', '62.0');
+        	Continuation conti4 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id, 'not_a_number', '62.0');
 
         	// Store continuation requests
         	requests1 = conti1.getRequests(); 
