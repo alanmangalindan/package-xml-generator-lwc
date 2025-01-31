@@ -1,5 +1,19 @@
 <template>
     <lightning-card title="">
+        <div class="slds-var-m-bottom_medium">
+            <lightning-record-picker
+                label="Generate package.xml for metadata changes done by User:"
+                placeholder="Search for a User"
+                object-api-name="User"
+                value={userId}
+                display-info={displayInfo}
+                matching-info={matchingInfo}
+                filter={filter}
+                onchange={handleChange}
+            >
+            </lightning-record-picker>
+        </div>
+
         <div class="slds-p-around_xxx-small lgc-bg">
             <lightning-input
                 name="usernameInput"

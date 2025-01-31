@@ -3,6 +3,7 @@
 import { LightningElement } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation";
+import Id from '@salesforce/user/Id';
 
 export default class PackageXmlGenerator extends LightningElement {
     username = "";
@@ -10,6 +11,28 @@ export default class PackageXmlGenerator extends LightningElement {
     packageXml = "";
     apiVersion = "62.0";
     showSpinner = false;
+    userId = Id; // set userId to the current user
+    displayInfo = {
+        primaryField: "Name",
+        additionalFields: ["Username"]
+    };
+    matchingInfo = {
+        primaryField: { fieldPath: "Name" },
+        additionalFields: [{ fieldPath: "Username" }]
+    };
+    filter = {
+        criteria: [
+            {
+                fieldPath: "IsActive",
+                value: true,
+                operator: "eq"
+            }
+        ]
+    };
+
+    handleChange(event) {
+        this.userId = event.detail.recordId;
+    }
 
     async generatePackage(event) {
         this.showSpinner = true;
