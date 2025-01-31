@@ -17,8 +17,8 @@ export default class PackageXmlGenerator extends LightningElement {
         additionalFields: ["Username"]
     };
     matchingInfo = {
-        primaryField: { fieldPath: "Name" },
-        additionalFields: [{ fieldPath: "Username" }]
+        primaryField: { fieldPath: "Name",  mode: "startsWith" },
+        additionalFields: [{ fieldPath: "Username", mode: "startsWith" }]
     };
     filter = {
         criteria: [
