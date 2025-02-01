@@ -6,7 +6,6 @@ import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorC
 import Id from "@salesforce/user/Id";
 
 export default class PackageXmlGenerator extends LightningElement {
-    username = "";
     numberOfDays = "1";
     packageXml = "";
     apiVersion = "62.0";
@@ -42,9 +41,6 @@ export default class PackageXmlGenerator extends LightningElement {
         let inputs = this.template.querySelectorAll("lightning-input");
 
         inputs.forEach((inp) => {
-            if (inp.name == "usernameInput") {
-                this.username = inp.value;
-            }
             if (inp.name == "numberOfDaysInput") {
                 this.numberOfDays = inp.value;
             }
