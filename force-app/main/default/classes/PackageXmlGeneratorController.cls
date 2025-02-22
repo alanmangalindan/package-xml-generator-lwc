@@ -2,7 +2,7 @@
 // controller for packageXmlGenerator LWC to be used only in source-tracked sandboxes
 public without sharing class PackageXmlGeneratorController {
     
-    @AuraEnabled(continuation=true cacheable=true)
+    @AuraEnabled(continuation=true)
     public static Object startContinuation(String userId, String numberOfDays, String apiVersion) {
 
         Integer numDays = 1;
@@ -48,7 +48,7 @@ public without sharing class PackageXmlGeneratorController {
         return con;
     }
 
-    @AuraEnabled(cacheable=true) 
+    @AuraEnabled 
     public static Map<String, List<String>> querySourceMember(List<String> labels, Object state) {
 
         System.debug(LoggingLevel.INFO, 'labels: ' + labels);
