@@ -8,7 +8,7 @@ import Id from "@salesforce/user/Id";
 export default class PackageXmlGenerator extends LightningElement {
     numberOfDays = "1";
     packageXml = "";
-    apiVersion = "62.0";
+    apiVersion = "63.0";
     showSpinner = false;
     userId = Id; // set userId to the current user
     displayInfo = {
