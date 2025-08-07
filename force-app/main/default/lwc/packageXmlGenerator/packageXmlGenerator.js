@@ -68,12 +68,19 @@ export default class PackageXmlGenerator extends LightningElement {
                 this.packageXml = "Please select a User.";
             } else {
                 this.packageXml =
-                    "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
-                    JSON.stringify(error);
-                console.log(
-                    "Please ensure this is a source-tracked sandbox. Error occurred in PackageXmlGeneratorController Class: " +
-                        JSON.stringify(error)
-                );
+                    "Error occurred in PackageXmlGeneratorController Class: " +
+                    JSON.stringify(error) +
+                    "\n" +
+                    "Please check the following:" +
+                    "\n" +
+                    "Ensure this is a source-tracked sandbox" +
+                    "\n" +
+                    "Check if the user has Api Enabled permission" +
+                    "\n" +
+                    "Check allowed IP Ranges for REST and Tooling APIs" +
+                    "\n" +
+                    "Check if login IP ranges are enforced on every request in Session Settings";
+                console.log("Error occurred in PackageXmlGeneratorController Class: " + JSON.stringify(error));
             }
         } finally {
             this.showSpinner = false;

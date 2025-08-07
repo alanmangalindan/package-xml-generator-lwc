@@ -4,7 +4,6 @@
     "@prettier/plugin-xml"
   ],
   "trailingComma": "none",
-  "tabWidth": 4,
   "overrides": [
     {
       "files": "**/lwc/**/*.html",
@@ -15,5 +14,6 @@
       "options": { "parser": "html" }
     }
   ],
-  "printWidth": 120
+  "printWidth": 120,
+  "tabWidth": 4
 }
