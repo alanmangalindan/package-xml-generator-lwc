@@ -70,5 +70,29 @@ public class PackageXmlGeneratorControllerTest {
         System.assert(packageXmlResult1.values()[0].size() == 2, '2 MemberName values were not returned in the HTTP mock callout.');
 
         System.assert(errorMessage.contains('Script-thrown exception'), 'Continuation Error scenario not achieved.');        
+    }    
+
+    @IsTest
+    static void getLatestApiVersionTest() {
+        List<Profile> adminProfile = [SELECT Id, Name from Profile WHERE Name = 'System Administrator'];
+        User adminUser = new User(FirstName = 'Test', LastName = 'AdminUser', Alias='TestAdmn', Email='some_email@testemailuser.co.nz', 
+                                 Username = 'test.adminuser_2@my.unique.user.co.nz.sandbox', ProfileId = adminProfile[0].Id,
+                                 LanguageLocaleKey = 'en_US', EmailEncodingKey='UTF-8', LocaleSidKey = 'en_NZ', TimeZoneSidKey = 'Pacific/Auckland');
+        insert adminUser;
+        System.debug('adminUser.Id:: ' + adminUser.Id);
+
+        Map<String, List<String>> packageXmlResult1;
+
+        String latestApiVersion;
+
+        Test.setMock(HttpCalloutMock.class, new ApiVersionMock());
+        
+        Test.startTest();        
+        System.runAs(adminUser){
+            latestApiVersion = PackageXmlGeneratorController.getLatestApiVersion();
+        }
+        Test.stopTest();
+        
+        Assert.areEqual('64.0', latestApiVersion, 'Latest API version is not 64.0 as specified in ApiVersionMock Class.');
     }
 }

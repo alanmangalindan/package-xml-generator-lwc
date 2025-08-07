@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>ApiVersionMock</members>
         <members>PackageXmlGeneratorController</members>
         <members>PackageXmlGeneratorControllerTest</members>
         <members>PackageXmlUserSessionHandler</members>
@@ -27,5 +28,5 @@
         <members>Package_XML_Generator</members>
         <name>PermissionSet</name>
     </types>
-    <version>62.0</version>
+    <version>64.0</version>
 </Package>

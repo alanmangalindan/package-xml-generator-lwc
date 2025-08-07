@@ -3,6 +3,7 @@
 import { LightningElement } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import startContinuation from "@salesforce/apexContinuation/PackageXmlGeneratorController.startContinuation";
+import getLatestApiVersion from "@salesforce/apexContinuation/PackageXmlGeneratorController.getLatestApiVersion";
 import Id from "@salesforce/user/Id";
 
 export default class PackageXmlGenerator extends LightningElement {
@@ -16,7 +17,7 @@ export default class PackageXmlGenerator extends LightningElement {
         additionalFields: ["Username"]
     };
     matchingInfo = {
-        primaryField: { fieldPath: "Name",  mode: "startsWith" },
+        primaryField: { fieldPath: "Name", mode: "startsWith" },
         additionalFields: [{ fieldPath: "Username", mode: "startsWith" }]
     };
     filter = {
@@ -131,5 +132,21 @@ export default class PackageXmlGenerator extends LightningElement {
         });
         this.dispatchEvent(toastEvent);
         return navigator.clipboard.writeText("");
+    }
+
+    async updateLatestApiVersion() {
+        try {
+            const latestApiVersionResult = await getLatestApiVersion();
+
+            if (latestApiVersionResult) {
+                this.apiVersion = latestApiVersionResult;
+            }
+        } catch (error) {
+            console.log("Error retrieving latest API version: " + JSON.stringify(error));
+        }
+    }
+
+    connectedCallback() {
+        this.updateLatestApiVersion();
     }
 }
