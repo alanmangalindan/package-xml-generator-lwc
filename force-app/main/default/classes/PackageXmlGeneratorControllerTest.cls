@@ -1,58 +1,89 @@
 // Alan Mangalindan (alan.mangalindan@davanti.co.nz)
 @isTest
 public class PackageXmlGeneratorControllerTest {
-
     @IsTest
-    static void getChangedMetadataTest(){
-        
-        List<Profile> adminProfile = [SELECT Id, Name from Profile WHERE Name = 'System Administrator'];
-        User adminUser = new User(FirstName = 'Test', LastName = 'AdminUser', Alias='TestAdmn', Email='some_email@testemailuser.co.nz', 
-                                 Username = 'test.adminuser@my.unique.user.co.nz.sandbox', ProfileId = adminProfile[0].Id,
-                                 LanguageLocaleKey = 'en_US', EmailEncodingKey='UTF-8', LocaleSidKey = 'en_NZ', TimeZoneSidKey = 'Pacific/Auckland');
+    static void getChangedMetadataTest() {
+        List<Profile> adminProfile = [SELECT Id, Name FROM Profile WHERE Name = 'System Administrator'];
+        User adminUser = new User(
+            FirstName = 'Test',
+            LastName = 'AdminUser',
+            Alias = 'TestAdmn',
+            Email = 'some_email@testemailuser.co.nz',
+            Username = 'test.adminuser@my.unique.user.co.nz.sandbox',
+            ProfileId = adminProfile[0].Id,
+            LanguageLocaleKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            LocaleSidKey = 'en_NZ',
+            TimeZoneSidKey = 'Pacific/Auckland'
+        );
         insert adminUser;
         System.debug('adminUser.Id:: ' + adminUser.Id);
 
-        Map<String, HttpRequest> requests1;        
-        Map<String, HttpRequest> requests2;        
-        Map<String, HttpRequest> requests3;        
+        Map<String, HttpRequest> requests1;
+        Map<String, HttpRequest> requests2;
+        Map<String, HttpRequest> requests3;
         Map<String, HttpRequest> requests4;
 
         Map<String, List<String>> packageXmlResult1;
 
-        String errorMessage;        
-        
-        Test.startTest();        
-        System.runAs(adminUser){
-        	Continuation conti1 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'', '62.0');
-        	Continuation conti2 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'1', '62.0');
-        	Continuation conti3 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id,'-1', '62.0');
-        	Continuation conti4 = (Continuation) PackageXmlGeneratorController.startContinuation(adminUser.Id, 'not_a_number', '62.0');
+        String errorMessage;
 
-        	// Store continuation requests
-        	requests1 = conti1.getRequests(); 
-        	requests2 = conti2.getRequests();      
-        	requests3 = conti3.getRequests(); 
-        	requests4 = conti4.getRequests();
+        Test.startTest();
+        System.runAs(adminUser) {
+            Continuation conti1 = (Continuation) PackageXmlGeneratorController.startContinuation(
+                adminUser.Id,
+                '',
+                '62.0'
+            );
+            Continuation conti2 = (Continuation) PackageXmlGeneratorController.startContinuation(
+                adminUser.Id,
+                '1',
+                '62.0'
+            );
+            Continuation conti3 = (Continuation) PackageXmlGeneratorController.startContinuation(
+                adminUser.Id,
+                '-1',
+                '62.0'
+            );
+            Continuation conti4 = (Continuation) PackageXmlGeneratorController.startContinuation(
+                adminUser.Id,
+                'not_a_number',
+                '62.0'
+            );
+
+            // Store continuation requests
+            requests1 = conti1.getRequests();
+            requests2 = conti2.getRequests();
+            requests3 = conti3.getRequests();
+            requests4 = conti4.getRequests();
 
             // Store the mock response
-        	HttpResponse response = new SourceMemberMock().respond(requests1.values()[0]);
+            HttpResponse response = new SourceMemberMock().respond(requests1.values()[0]);
             // Set the mock response
             Test.setContinuationResponse(new List<String>(requests1.keySet())[0], response);
-            packageXmlResult1 = PackageXmlGeneratorController.querySourceMember(new List<String>(requests1.keySet()), 'Query SourceMember Object via REST Tooling API');
-        	System.debug(LoggingLevel.INFO, 'packageXmlResult1: ' + packageXmlResult1);
+            packageXmlResult1 = PackageXmlGeneratorController.querySourceMember(
+                new List<String>(requests1.keySet()),
+                'Query SourceMember Object via REST Tooling API'
+            );
+            System.debug(LoggingLevel.INFO, 'packageXmlResult1: ' + packageXmlResult1);
 
-            Test.setContinuationResponse(new List<String>(requests1.keySet())[0], new SourceMemberMock().responseFailure(requests1.values()[0]));
+            Test.setContinuationResponse(
+                new List<String>(requests1.keySet())[0],
+                new SourceMemberMock().responseFailure(requests1.values()[0])
+            );
             try {
-                PackageXmlGeneratorController.querySourceMember(new List<String>(requests1.keySet()), 'Query SourceMember Object via REST Tooling API');
-            }
-            catch (Exception excep) {
+                PackageXmlGeneratorController.querySourceMember(
+                    new List<String>(requests1.keySet()),
+                    'Query SourceMember Object via REST Tooling API'
+                );
+            } catch (Exception excep) {
                 System.debug(LoggingLevel.INFO, 'excep: ' + excep);
                 System.debug(LoggingLevel.INFO, 'excep.getMessage(): ' + excep.getMessage());
                 errorMessage = excep.getMessage();
             }
         }
         Test.stopTest();
-        
+
         System.debug(LoggingLevel.INFO, 'requests1: ' + requests1);
         System.debug(LoggingLevel.INFO, 'requests1.keySet(): ' + requests1.keySet());
         System.assert(requests1.size() == 1);
@@ -67,17 +98,29 @@ public class PackageXmlGeneratorControllerTest {
         System.assert(requests4.size() == 1);
 
         System.assert(packageXmlResult1.keySet().contains('ApexClass'), 'MemberType returned is not ApexClass');
-        System.assert(packageXmlResult1.values()[0].size() == 2, '2 MemberName values were not returned in the HTTP mock callout.');
+        System.assert(
+            packageXmlResult1.values()[0].size() == 2,
+            '2 MemberName values were not returned in the HTTP mock callout.'
+        );
 
-        System.assert(errorMessage.contains('Script-thrown exception'), 'Continuation Error scenario not achieved.');        
-    }    
+        System.assert(errorMessage.contains('Script-thrown exception'), 'Continuation Error scenario not achieved.');
+    }
 
     @IsTest
     static void getLatestApiVersionTest() {
-        List<Profile> adminProfile = [SELECT Id, Name from Profile WHERE Name = 'System Administrator'];
-        User adminUser = new User(FirstName = 'Test', LastName = 'AdminUser', Alias='TestAdmn', Email='some_email@testemailuser.co.nz', 
-                                 Username = 'test.adminuser_2@my.unique.user.co.nz.sandbox', ProfileId = adminProfile[0].Id,
-                                 LanguageLocaleKey = 'en_US', EmailEncodingKey='UTF-8', LocaleSidKey = 'en_NZ', TimeZoneSidKey = 'Pacific/Auckland');
+        List<Profile> adminProfile = [SELECT Id, Name FROM Profile WHERE Name = 'System Administrator'];
+        User adminUser = new User(
+            FirstName = 'Test',
+            LastName = 'AdminUser',
+            Alias = 'TestAdmn',
+            Email = 'some_email@testemailuser.co.nz',
+            Username = 'test.adminuser_2@my.unique.user.co.nz.sandbox',
+            ProfileId = adminProfile[0].Id,
+            LanguageLocaleKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            LocaleSidKey = 'en_NZ',
+            TimeZoneSidKey = 'Pacific/Auckland'
+        );
         insert adminUser;
         System.debug('adminUser.Id:: ' + adminUser.Id);
 
@@ -86,13 +129,17 @@ public class PackageXmlGeneratorControllerTest {
         String latestApiVersion;
 
         Test.setMock(HttpCalloutMock.class, new ApiVersionMock());
-        
-        Test.startTest();        
-        System.runAs(adminUser){
+
+        Test.startTest();
+        System.runAs(adminUser) {
             latestApiVersion = PackageXmlGeneratorController.getLatestApiVersion();
         }
         Test.stopTest();
-        
-        Assert.areEqual('64.0', latestApiVersion, 'Latest API version is not 64.0 as specified in ApiVersionMock Class.');
+
+        Assert.areEqual(
+            '64.0',
+            latestApiVersion,
+            'Latest API version is not 64.0 as specified in ApiVersionMock Class.'
+        );
     }
 }
